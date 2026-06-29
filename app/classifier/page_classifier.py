@@ -112,7 +112,7 @@ def score_html(html: str, soup: BeautifulSoup) -> int:
 
     # Open Graph type = article
     og_type = soup.find("meta", {"property": "og:type"})
-    if og_type and "article" in (og_type.get("content") or "").lower():
+    if og_type and "article" in str(og_type.get("content", "")).lower():
         score += 25
 
     # Schema.org markup
@@ -159,7 +159,7 @@ def score_content(soup: BeautifulSoup) -> int:
         outbound = [
             a
             for a in content_el.find_all("a", href=True)
-            if a["href"].startswith("http")
+            if str(a["href"]).startswith("http")
         ]
         if len(outbound) > 3:
             score += 10

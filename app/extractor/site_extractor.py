@@ -93,7 +93,7 @@ class SiteExtractor:
             scope = scope or soup  # fall back to full page
 
             for tag in scope.find_all("a", href=True):
-                href = tag["href"].strip()
+                href = str(tag["href"]).strip()
 
                 # Skip non-http links
                 if not href.startswith(("http://", "https://")):

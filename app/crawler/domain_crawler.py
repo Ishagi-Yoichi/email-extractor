@@ -5,10 +5,10 @@ from urllib.parse import urljoin, urlparse
 
 import httpx
 import tldextract
-from app.crawler.robots import RobotsChecker
 from bs4 import BeautifulSoup
 
 from app.config import settings
+from app.crawler.robots import RobotsChecker
 
 logger = logging.getLogger(__name__)
 
@@ -62,7 +62,7 @@ class DomainCrawler:
         soup = BeautifulSoup(html, "lxml")
         links = []
         for tag in soup.find_all("a", href=True):
-            href = tag["href"].strip()
+            href = str(tag["href"]).strip()
             if href.startswith(("mailto:", "tel:", "javascript:")):
                 continue
             absolute = urljoin(base_url, href)
